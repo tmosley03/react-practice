@@ -9,7 +9,8 @@ class App extends Component {
       { name: 'Thomas!', age: 28 },
       {name: 'mike', age: 25},
       { name: 'john', age: 26}
-    ]
+    ],
+    showPersons: false
   }
 //==================================
   switchNameHandler = (newName) => {
@@ -32,6 +33,13 @@ class App extends Component {
       ]
     })
   }
+//================================
+  togglePersonsHandler = () => {
+   // console.log("person handler");
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
+  }
+
 //================================  
   render() {
     // this is an example of "inline styling". It is not true CSS and is scoped to this component.
@@ -47,19 +55,23 @@ class App extends Component {
         <h1>Hello I'm a React.JS app</h1>
       <p>This is really working</p>
       {/* this syntax below does work, but it is ineffecient, so try to avoid it. use the 'bind' method as seen further below.*/}
-      <button
+         <button
         style= {myStyle}
-        onClick={() => this.switchNameHandler("DOLAMITE!!")} className="btn">
-          Switch Name
+        onClick={this.togglePersonsHandler} className="btn">
+          Toggle Person
         </button>
-      <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-      {/* this is an example of 'binding'  */}
-      <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNameHandler.bind(this, "green lanterns")}
-        changed={this.nameChangedHandler}>
+      {this.state.showPersons ?
+        <div>
+        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+        {/* this is an example of 'binding'  */}
+        <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNameHandler.bind(this, "green lanterns")}
+          changed={this.nameChangedHandler}>
           My hobbies: BJJ
         </Person>
         <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
-      </div>;
+        </div> :null
+      }
+    </div>;
 
     //this is the same thing as above, just not written in JSX. When workining with React.JS always use JSx syntax.
   
