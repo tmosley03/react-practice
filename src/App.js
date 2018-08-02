@@ -50,7 +50,20 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
-
+    let persons = null;
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+          {/* this is an example of 'binding'  */}
+          <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNameHandler.bind(this, "green lanterns")}
+            changed={this.nameChangedHandler}>
+            My hobbies: BJJ
+        </Person>
+          <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        </div> 
+      );
+    }
     return <div className="App">
         <h1>Hello I'm a React.JS app</h1>
       <p>This is really working</p>
@@ -60,17 +73,9 @@ class App extends Component {
         onClick={this.togglePersonsHandler} className="btn">
           Toggle Person
         </button>
-      {this.state.showPersons ?
-        <div>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        {/* this is an example of 'binding'  */}
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNameHandler.bind(this, "green lanterns")}
-          changed={this.nameChangedHandler}>
-          My hobbies: BJJ
-        </Person>
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
-        </div> :null
-      }
+     {persons}
+       
+     
     </div>;
 
     //this is the same thing as above, just not written in JSX. When workining with React.JS always use JSx syntax.
