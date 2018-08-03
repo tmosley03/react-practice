@@ -6,23 +6,24 @@ class App extends Component {
   //state is a PROPERTY of App that is only available in components that EXTEND Component which is imported from React.
   state = {
     persons: [
-      { name: 'Thomas!', age: 28 },
-      {name: 'mike', age: 25},
-      { name: 'john', age: 26}
+      {id: 0, name: 'Thomas!', age: 28 },
+      {id: 1, name: 'mike', age: 25},
+      {id: 2, name: 'john', age: 26}
     ],
     showPersons: false
   }
 //==================================
-  switchNameHandler = (newName) => {
-    // console.log('was clicked')
-   //thise is not correct -- this.state.persons[0].name = 'max';
-    this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'mike', age: 25 },
-        { name: 'john', age: 26 }
-    ]})
-  }
+  deletePersonHandler = (personIndex) => {
+    // *Note: ALWAYS UPDATE STATE IN AN IMMUTABLE FASHION. DO NOT MUTATE THE ORIGINAL STATE. INSTEAD, 1. CREATE A COPY 2. CHAGE THE COPY 3. UPDATE THE STATE WITH ".setState()"
+
+     // ".slice()" method without args creates a copy of the persons ARRAY and     stores it in the new variable 'persons'.
+    // const persons = this.state.persons.slice();
+
+    // the spread '...' operator does the same thing (ES6)
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
+ }
 //================================
   nameChangedHandler = (event) => {
     this.setState({
@@ -50,20 +51,28 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
+
     let persons = null;
+
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-          {/* this is an example of 'binding'  */}
-          <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNameHandler.bind(this, "green lanterns")}
-            changed={this.nameChangedHandler}>
-            My hobbies: BJJ
-        </Person>
-          <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+
+          {this.state.persons.map((person, index) => {
+            return <Person
+              click={() => {this.deletePersonHandler()}}
+              name={person.name}
+              age={person.age}
+              key= {person.id} />
+          })}
+
+         
         </div> 
       );
     }
+
+    //
+
     return <div className="App">
         <h1>Hello I'm a React.JS app</h1>
       <p>This is really working</p>
@@ -73,10 +82,9 @@ class App extends Component {
         onClick={this.togglePersonsHandler} className="btn">
           Toggle Person
         </button>
+      {/* this is from the variable above */}
      {persons}
-       
-     
-    </div>;
+        </div>;
 
     //this is the same thing as above, just not written in JSX. When workining with React.JS always use JSx syntax.
   
