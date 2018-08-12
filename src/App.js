@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium from 'radium'
 
 class App extends Component {
   //state is a PROPERTY of App that is only available in components that EXTEND Component which is imported from React.
@@ -55,11 +56,16 @@ class App extends Component {
   render() {
     // this is an example of "inline styling". It is not true CSS and is scoped to this component.
     const myStyle = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     let persons = null;
@@ -76,17 +82,29 @@ class App extends Component {
               key={person.id}
               changed={(event) => this.nameChangedHandler(event, person.id)}/>
           })}
-
-         
         </div> 
       );
-    }
+      //change the color of the button when toggling
+      myStyle.backgroundColor = 'red';
+      myStyle[':hover'] = {
+        backgroundColor: 'lightred',
+        color: 'black'
+      }
 
+    }
+    let classes = [];
+
+    if (this.state.persons.length <= 2) {
+      classes.push('red');// classes = ['red']
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');// classes = ['red', 'bold']
+    }
     //
 
     return <div className="App">
         <h1>Hello I'm a React.JS app</h1>
-      <p>This is really working</p>
+      <p className={classes.join(' ')}>This is really working</p>
       {/* this syntax below does work, but it is ineffecient, so try to avoid it. use the 'bind' method as seen further below.*/}
          <button
         style= {myStyle}
@@ -103,5 +121,5 @@ class App extends Component {
 }
 }
 
-
-export default App;
+//export App as an argument for RADIUM in order to use its CSS properties
+export default Radium(App);
