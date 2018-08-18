@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium from 'radium'
+import Radium, { StyleRoot } from 'radium';
 
 class App extends Component {
   //state is a PROPERTY of App that is only available in components that EXTEND Component which is imported from React.
@@ -102,7 +102,10 @@ class App extends Component {
     }
     //
 
-    return <div className="App">
+    return (
+      //StyleRoot is a feature in RADIUM that allows for DOM object transformations (*** media queries ***, css transitions, element resizing)
+      <StyleRoot>
+      <div className="App">
         <h1>Hello I'm a React.JS app</h1>
       <p className={classes.join(' ')}>This is really working</p>
       {/* this syntax below does work, but it is ineffecient, so try to avoid it. use the 'bind' method as seen further below.*/}
@@ -113,7 +116,8 @@ class App extends Component {
         </button>
       {/* this is from the variable above */}
      {persons}
-        </div>;
+        </div>
+      </StyleRoot>);
 
     //this is the same thing as above, just not written in JSX. When workining with React.JS always use JSx syntax.
   
