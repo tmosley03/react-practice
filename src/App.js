@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium, { StyleRoot } from 'radium';
+//import Radium, { StyleRoot } from 'radium';
 
 class App extends Component {
   //state is a PROPERTY of App that is only available in components that EXTEND Component which is imported from React.
@@ -28,7 +28,7 @@ class App extends Component {
 //================================
   nameChangedHandler = (event, id) => {
 
-//findIndex takes a function as and arg just like ".map()"
+//findIndex is a "high order function" and takes a function as and arg just like ".map()"
     const personIndex = this.state.persons.findIndex(p => {
       return p.id === id;
     });
@@ -62,10 +62,7 @@ class App extends Component {
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
+      
     };
 
     let persons = null;
@@ -86,10 +83,7 @@ class App extends Component {
       );
       //change the color of the button when toggling
       myStyle.backgroundColor = 'red';
-      myStyle[':hover'] = {
-        backgroundColor: 'lightred',
-        color: 'black'
-      }
+     
 
     }
     let classes = [];
@@ -103,8 +97,8 @@ class App extends Component {
     //
 
     return (
-      //StyleRoot is a feature in RADIUM that allows for DOM object transformations (*** media queries ***, css transitions, element resizing)
-      <StyleRoot>
+      //StyleRoot is a feature in RADIUM that allows for DOM object transformations. It must wrap the APP element. (*** media queries ***, css transitions, element resizing)
+     
       <div className="App">
         <h1>Hello I'm a React.JS app</h1>
       <p className={classes.join(' ')}>This is really working</p>
@@ -117,7 +111,7 @@ class App extends Component {
       {/* this is from the variable above */}
      {persons}
         </div>
-      </StyleRoot>);
+      );
 
     //this is the same thing as above, just not written in JSX. When workining with React.JS always use JSx syntax.
   
@@ -126,4 +120,4 @@ class App extends Component {
 }
 
 //export App as an argument for RADIUM in order to use its CSS properties
-export default Radium(App);
+export default App;
