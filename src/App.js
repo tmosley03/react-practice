@@ -86,13 +86,14 @@ class App extends Component {
      
 
     }
+    // 
     let classes = [];
 
     if (this.state.persons.length <= 2) {
-      classes.push('red');// classes = ['red']
+      classes.push('red');// adds "red to classes array"
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');// classes = ['red', 'bold']
+      classes.push('bold');// adds bold to classes array
     }
     //
 
@@ -101,7 +102,7 @@ class App extends Component {
      
       <div className="App">
         <h1>Hello I'm a React.JS app</h1>
-      <p className={classes.join(' ')}>This is really working</p>
+      <p className={classes.join(' ')}>This is really working</p> {/*classes is updated dynamically (see line 90 - 96)*/}
       {/* this syntax below does work, but it is ineffecient, so try to avoid it. use the 'bind' method as seen further below.*/}
          <button
         style= {myStyle}
